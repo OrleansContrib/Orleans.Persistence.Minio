@@ -1,0 +1,10 @@
+<Project>
+ <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>Kimserey Lam</Authors>
+    <RepositoryUrl>https://github.com/Kimserey/Orleans.Persistence.Minio</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>https://github.com/Kimserey/Orleans.Persistence.Minio/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Kimserey/Orleans.Persistence.Minio</PackageProjectUrl>
+ </PropertyGroup>
+</Project>

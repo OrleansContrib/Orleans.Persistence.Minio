@@ -8,6 +8,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3DAD3146-7D97-4547-A137-25F5E34716F5}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		build.fsx = build.fsx
+		Directory.Build.props = Directory.Build.props
+		fake.cmd = fake.cmd
+		fake.sh = fake.sh
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
