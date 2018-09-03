@@ -1,0 +1,45 @@
+version: '{build}'
+image: Visual Studio 2017
+skip_branch_with_pr: true
+
+skip_commits:
+  files:
+    - docs/**/*
+    - '**/*.md'
+    - .gitignore
+    - CREDITS
+    - LICENSE
+
+pull_requests:
+  do_not_increment_build_number: true
+
+environment:
+  VisualStudioVersion: 15.0
+  BuildConfiguration: release
+
+install:
+  - choco install gitversion.portable -pre -y
+
+build_script:
+- .\fake run build.fsx -t All
+
+test: off
+
+artifacts:
+  - path: .\artifacts\**\*.nupkg
+
+deploy:
+  - provider: NuGet
+    api_key:
+      secure:
+    on:
+      appveyor_repo_tag: true
+
+  - provider: GitHub
+    description: ''
+    release: '$(appveyor_repo_tag_name)'
+    artifact: /.*\.nupkg/
+    auth_token:
+      secure:
+    on:
+      appveyor_repo_tag: true
