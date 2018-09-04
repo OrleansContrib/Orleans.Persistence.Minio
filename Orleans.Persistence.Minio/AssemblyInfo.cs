@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kimserey Lam")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Microsoft Orleans persistence provider for Minio")]
 [assembly: System.Reflection.AssemblyProductAttribute("Orleans.Persistence.Minio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Orleans.Persistence.Minio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]

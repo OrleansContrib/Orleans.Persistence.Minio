@@ -7,7 +7,7 @@ using Orleans.Runtime;
 using Orleans.Storage;
 using System;
 
-namespace Orleans.Persistence.Minio.Hosting
+namespace Orleans.Persistence.Minio
 {
     public static class MinioSiloBuilderExtensions
     {
