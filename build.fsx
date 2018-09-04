@@ -90,7 +90,7 @@ Target.create "Build" (fun _ ->
         { buildOptions with Configuration = DotNet.BuildConfiguration.fromEnvironVarOrDefault Environment.BUILD_CONFIGURATION DotNet.BuildConfiguration.Debug }
 
     !! "**/*.*proj"
-    -- "**/Groomgy.*Test.*proj"
+    -- "**/Orleans.Persistence.Minio.*Test.*proj"
     -- "**/gitversion/**/*.*proj"
     |> Seq.iter (DotNet.build setParams)
 )
@@ -106,7 +106,7 @@ Target.create "Pack" (fun _ ->
             Common = { packOptions.Common with CustomParams = Some (sprintf "/p:PackageVersion=%s" nuGetVer) } }
 
     !! "**/*.*proj"
-    -- "**/Groomgy.*Test.*proj"
+    -- "**/Orleans.Persistence.Minio.*Test.*proj"
     -- "**/gitversion/**/*.*proj"
     |> Seq.iter (DotNet.pack setParams)
 )
