@@ -2,7 +2,7 @@
 
 Minio implementation of Orleans Grain Storage Provider
 
-[![Build status](https://ci.appveyor.com/api/projects/status/9h5jrxc0a5uq813x?svg=true)](https://ci.appveyor.com/project/Kimserey16189/orleans-persistence-minio)
+[![Build status](https://ci.appveyor.com/api/projects/status/du87opx8tcyp7mda?svg=true)](https://ci.appveyor.com/project/Kimserey16189/orleans-persistence-minio-bopb3)
 [![NuGet](https://img.shields.io/nuget/v/Orleans.Persistence.Minio.svg?style=flat&colorB=blue)](http://www.nuget.org/packages/Orleans.Persistence.Minio)
 
 [Minio](https://www.minio.io/) is a open source cloud storage.
