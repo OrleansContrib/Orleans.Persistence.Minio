@@ -40,6 +40,6 @@ deploy:
     release: '$(appveyor_repo_tag_name)'
     artifact: /.*\.nupkg/
     auth_token:
-      secure: zYhgjpK4+TiK4Yw4InUCLlPjUQmMPDRVkcf9EeOjcuu1+DbvYIBLg763LlLWcei0
+      secure: NodQdMPTxTFtZSab0nGfGuX6JG+LHvBWLjERzCgMm9ssyx2wTGKGaCTt+/sOe4hY
     on:
       appveyor_repo_tag: true
