@@ -2,9 +2,9 @@
  <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>Kimserey Lam</Authors>
-    <RepositoryUrl>https://github.com/Kimserey/Orleans.Persistence.Minio</RepositoryUrl>
+    <RepositoryUrl>https://github.com/OrleansContrib/Orleans.Persistence.Minio</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>https://github.com/Kimserey/Orleans.Persistence.Minio/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/Kimserey/Orleans.Persistence.Minio</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/OrleansContrib/Orleans.Persistence.Minio/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/OrleansContrib/Orleans.Persistence.Minio</PackageProjectUrl>
  </PropertyGroup>
 </Project>

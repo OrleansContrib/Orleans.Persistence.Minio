@@ -15,7 +15,7 @@ module Environment =
     let [<Literal>] APPVEYOR_REPO_COMMIT = "APPVEYOR_REPO_COMMIT"
     let [<Literal>] APPVEYOR_REPO_TAG_NAME = "APPVEYOR_REPO_TAG_NAME"
     let [<Literal>] BUILD_CONFIGURATION = "BuildConfiguration"
-    let [<Literal>] REPOSITORY = "https://github.com/Kimserey/Orleans.Persistence.Minio.git"
+    let [<Literal>] REPOSITORY = "https://github.com/OrleansContrib/Orleans.Persistence.Minio.git"
 
 module GitVersion =
     module Process =
