@@ -1,6 +1,5 @@
 <Project>
  <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>Kimserey Lam</Authors>
     <RepositoryUrl>https://github.com/OrleansContrib/Orleans.Persistence.Minio</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
