@@ -17,32 +17,43 @@ module Environment =
     let [<Literal>] BUILD_CONFIGURATION = "BuildConfiguration"
     let [<Literal>] REPOSITORY = "https://github.com/OrleansContrib/Orleans.Persistence.Minio.git"
 
+module Process =
+    let private timeout =
+        System.TimeSpan.FromMinutes 2.
+
+    let execWithMultiResult f =
+        Process.execWithResult f timeout
+        |> fun r -> r.Messages
+
+    let execWithSingleResult f =
+        execWithMultiResult f
+        |> List.head
+
 module GitVersion =
     let showVariable =
-        let execProcess f =
-            Process.execWithResult f (System.TimeSpan.FromMinutes 2.)
-            |> fun r -> r.Messages
-            |> List.head
-
         let commit =
             match Environment.environVarOrNone Environment.APPVEYOR_REPO_COMMIT with
             | Some c -> c
-            | None -> execProcess (fun info -> { info with FileName = "git"; Arguments = "rev-parse HEAD" })
+            | None -> Process.execWithSingleResult (fun info -> { info with FileName = "git"; Arguments = "rev-parse HEAD" })
 
         printfn "Executing gitversion from commit '%s'." commit
 
         fun variable ->
             match Environment.environVarOrNone Environment.APPVEYOR_REPO_BRANCH, Environment.environVarOrNone Environment.APPVEYOR_PULL_REQUEST_NUMBER with
             | Some branch, None ->
-                execProcess (fun info ->
+                Process.execWithSingleResult (fun info ->
                     { info with
                         FileName = "gitversion"
                         Arguments = sprintf "/showvariable %s /url %s /b b-%s /dynamicRepoLocation .\gitversion /c %s" variable Environment.REPOSITORY branch commit })
             | _ ->
-                execProcess (fun info -> { info with FileName = "gitversion"; Arguments = sprintf "/showvariable %s" variable })
+                Process.execWithSingleResult (fun info -> { info with FileName = "gitversion"; Arguments = sprintf "/showvariable %s" variable })
 
     let get =
         let mutable value: Option<string * string * string> = None
+
+        Target.createFinal "ClearGitVersionRepositoryLocation" (fun _ ->
+            Shell.deleteDir "gitversion"
+        )
 
         fun () ->
             match value with
@@ -78,6 +89,24 @@ Target.create "UpdateBuildVersion" (fun _ ->
     |> ignore
 )
 
+Target.create "GatherReleaseNotes" (fun _ ->
+    let (fullSemVer, _, _) = GitVersion.get()
+
+    let prevCommitHash =
+        Process.execWithSingleResult (fun info -> { info with FileName = "git"; Arguments = "rev-list --tags --skip=1 --max-count=1" })
+    let previousTag =
+        Process.execWithSingleResult (fun info -> { info with FileName = "git"; Arguments = sprintf "describe --abbrev=0 --tags %s" prevCommitHash })
+    let releaseNotes =
+        Process.execWithMultiResult (fun info -> { info with FileName = "git"; Arguments = sprintf "log --pretty=format:\"%%h %%s\" %s..%s" previousTag fullSemVer})
+        |> String.concat(System.Environment.NewLine)
+
+    printfn "Gathered release notes:"
+    printfn "%s" releaseNotes
+
+    Shell.Exec("appveyor", sprintf "SetVariable -Name release_notes -Value \"%s\"" releaseNotes)
+    |> ignore
+)
+
 Target.create "Build" (fun _ ->
     let (fullSemVer, assemblyVer, _) = GitVersion.get()
 
@@ -108,15 +137,12 @@ Target.create "Pack" (fun _ ->
     |> Seq.iter (DotNet.pack setParams)
 )
 
-Target.createFinal "ClearGitVersionRepositoryLocation" (fun _ ->
-    Shell.deleteDir "gitversion"
-)
-
 Target.create "All" ignore
 
 "Clean"
   ==> "PrintVersion"
   =?> ("UpdateBuildVersion", Environment.environVarAsBool Environment.APPVEYOR)
+  =?> ("GatherReleaseNotes", not <| String.isNullOrWhiteSpace(Environment.environVar Environment.APPVEYOR_REPO_TAG_NAME))
   ==> "Build"
   ==> "Pack"
   ==> "All"

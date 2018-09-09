@@ -36,7 +36,7 @@ deploy:
       appveyor_repo_tag: true
 
   - provider: GitHub
-    description: ''
+    description: '$(release_notes)'
     release: '$(appveyor_repo_tag_name)'
     artifact: /.*\.nupkg/
     auth_token:
